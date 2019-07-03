@@ -1,0 +1,68 @@
+{
+	"RATE_LIMIT":
+		{
+			"default_rule": ["200 per day", "50 per hour"],
+			"storage_uri" : "redis://127.0.0.1:6379/2"
+		},
+	"LOGGING": {
+		"formatter": "[%(asctime)s %(filename)15s:%(lineno)4s - %(funcName)13s()] %(levelname)7s in %(module)13s: %(message)s",
+		"level": "DEBUG"
+	},
+	"ERRORS": {
+		"server_error": {
+			"code": "server_error",
+			"reason": "Server is in maintenance mode",
+			"status_code": 500
+		},
+		"service_error": {
+			"code": "server_error",
+			"reason": "Remote service is in maintenance mode",
+			"status_code": 500
+		},
+		"400": {
+			"code": "bad_request",
+			"reason": "Invalid request has been given",
+			"status_code": 400
+		},
+		"404": {
+			"code": "not_found",
+			"reason": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again",
+			"status_code": 404
+		},
+		"invalid_schema": {
+			"code": "invalid_schema",
+			"reason": "Given data is not valid",
+			"status_code": 400
+		},
+		"value_error": {
+			"code": "value_error",
+			"reason": "Given data is not valid",
+			"status_code": 400
+		},
+		"future_timeout": {
+			"code": "service_timeout",
+			"reason": "Could not call remote service",
+			"status_code": 503
+		},
+		"client_not_found": {
+			"code": "client_not_found",
+			"reason": "Client not found!",
+			"status_code": 400
+		},
+		"client_exists": {
+			"code": "client_exists",
+			"reason": "Client already exists!",
+			"status_code": 400
+		},
+		"invalid_redirection_uri": {
+			"code": "invalid_redirection_uri",
+			"reason": "Provided redirection URI is invalid!",
+			"status_code": 400
+		},
+		"invalid_token": {
+			"code": "invalid_token",
+			"reason": "The access token provided is expired, revoked or malformed",
+			"status_code": 400
+		}
+	}
+}
