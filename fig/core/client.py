@@ -1,5 +1,5 @@
 from flask_limiter.util import get_remote_address
-from olive.proto.rpc_client import RPCClient
+from olive.proto.rpc import RPCClient
 from flask_restful import Resource
 from fig import app, limiter
 
