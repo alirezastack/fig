@@ -7,7 +7,6 @@ from flask import Flask, jsonify
 from olive.exc import GRPCError
 import traceback
 import logging
-import ujson
 
 
 app = Flask(import_name=__name__)
@@ -58,7 +57,7 @@ def handle_error(e):
         else:
             app.logger.error('@TODO status code {} needs to be added in error config'.format(status_code))
     elif isinstance(e, GRPCError):
-        details = [] if not e.errors.details else ujson.loads(e.errors.details)
+        details = [] if not e.errors.details else list(e.errors.details)
         code = e.errors.code
         reason = err['service_error']['reason']
         if code in err:
