@@ -1,4 +1,5 @@
 from flask_limiter.util import get_remote_address
+from jsonschema import ValidationError
 from werkzeug.exceptions import HTTPException
 from logging.config import dictConfig
 from grpc import FutureTimeoutError
@@ -70,6 +71,11 @@ def handle_error(e):
         code = err['future_timeout']['code']
         reason = err['future_timeout']['reason']
         status_code = err['future_timeout']['status_code']
+    elif isinstance(e, ValidationError):
+        code = err['invalid_schema']['code']
+        reason = e.message
+        status_code = err['invalid_schema']['status_code']
+        details = [e.instance]
     else:
         pass
 
