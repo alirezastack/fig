@@ -194,6 +194,14 @@ def test_invalid_properties_update_question(client, app):
     assert 'Additional properties are not allowed' in response.json['error']['reason']
 
 
+def test_get_questions(client, app):
+    response = client.get(path='/questions')
+
+    assert response.status_code == 200
+    assert 'result' in response.json
+    assert type(response.json['result']) == list
+
+
 # TODO not working! needs to be fixed
 # some_error_mock = mock.Mock()
 # some_error_mock.side_effect = GRPCError(

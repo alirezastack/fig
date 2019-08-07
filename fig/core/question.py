@@ -23,11 +23,27 @@ class QuestionCollection(Resource):
         super(QuestionCollection, self).__init__()
 
     def get(self):
-        # TODO to be implemented
         client_rpc = RPCClient('mango')
         res = client_rpc.call(method='GetQuestions')
-        print(res)
-        return {}
+        questions = []
+        for question in res.questions:
+            print(type(question))
+            questions.append({
+                '_id': question._id,
+                'category': question.category,
+                'title': {
+                    'on_rate': question.title.on_rate,
+                    'on_display': question.title.on_display
+                },
+                'order': question.order,
+                'status': question.status,
+                'include_in': list(question.include_in),
+                'weight': question.weight
+            })
+
+        return {
+            'result': questions
+        }
 
     def post(self):
         app.logger.debug('creating a new question...')
