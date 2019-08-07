@@ -54,3 +54,51 @@ update_question = {
     "additionalProperties": False,
     "minProperties": 1
 }
+
+add_survey = {
+    "type": "object",
+    "properties": {
+        "questions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "question_id": {
+                        "type": "string"
+                    },
+                    "rating": {
+                        "type": "number"
+                    }
+                },
+                "additionalProperties": False
+            },
+        },
+        "user_id": {
+            "type": "string"
+        },
+        "staff_id": {
+            "type": "string"
+        },
+        "reservation_id": {
+            "type": "string"
+        },
+        "status": {
+            "type": "string"
+        },
+        "content": {
+            "type": "string"
+        },
+        "platform": {
+            "type": "string"
+        },
+    },
+    "additionalProperties": False,
+    "required": [
+        "questions",
+        "user_id",
+        "reservation_id",
+        "status",
+        "content",
+        "platform",
+    ]
+}
