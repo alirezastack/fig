@@ -27,7 +27,6 @@ class QuestionCollection(Resource):
         res = client_rpc.call(method='GetQuestions')
         questions = []
         for question in res.questions:
-            print(type(question))
             questions.append({
                 '_id': question._id,
                 'category': question.category,
