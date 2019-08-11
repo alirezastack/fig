@@ -23,7 +23,36 @@ class SurveyCollection(Resource):
         super(SurveyCollection, self).__init__()
 
     def get(self):
-        raise NotImplementedError
+        skip = int(request.args.get('skip', 0))
+        page_size = int(request.args.get('page_size', 50))
+        app.logger.debug('getting list of surveys skip={} limit={}'.format(skip, page_size))
+        client_rpc = RPCClient('mango')
+        res = client_rpc.call(method='GetSurveys',
+                              skip=skip,
+                              limit=page_size)
+
+        surveys = []
+        for survey in res.surveys:
+            surveys.append({
+                '_id': survey._id,
+                'reservation_id': survey.reservation_id,
+                'total_rating': survey.total_rating,
+                'questions': [{'question_id': q.question_id, 'rating': q.rating} for q in survey.questions],
+                'staff_id': survey.staff_id,
+                'user_id': survey.user_id,
+                'status': survey.status,
+                'content': survey.content,
+                'platform': survey.platform
+            })
+
+        return {
+            'pagination': {
+                'skip': skip,
+                'page_size': page_size,
+                'total_count': res.total_count
+            },
+            'result': surveys
+        }, 200
 
     def post(self):
         app.logger.debug('creating a new survey...')
