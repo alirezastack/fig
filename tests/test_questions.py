@@ -90,8 +90,8 @@ def test_create_question(mock_rpc_resp, client, app):
         'category': 'h'
     }), headers=headers)
 
-    assert response.json['question_id'] == '5d47b9b46dd9f292c39362c8'
-    assert type(response.json['question_id']) == str
+    assert response.json['result']['question_id'] == '5d47b9b46dd9f292c39362c8'
+    assert type(response.json['result']['question_id']) == str
 
 
 @patch.object(RPCClient, 'call')
@@ -139,8 +139,8 @@ def test_delete_question(mock_rpc_resp, client, app):
     response = client.delete('/questions/5d47b9b46dd9f292c39362c8')
 
     assert response.status_code == 200
-    assert type(response.json['is_deleted']) == bool
-    assert response.json['is_deleted'] == True
+    assert type(response.json['result']['is_deleted']) == bool
+    assert response.json['result']['is_deleted'] == True
 
 
 @patch.object(RPCClient, 'call')
@@ -162,8 +162,8 @@ def test_update_question(mock_rpc_resp, client, app):
     }), headers=headers)
 
     assert response.status_code == 200
-    assert type(response.json['is_updated']) == bool
-    assert response.json['is_updated'] == True
+    assert type(response.json['result']['is_updated']) == bool
+    assert response.json['result']['is_updated'] == True
 
 
 def test_min_properties_update_question(client, app):
