@@ -1,7 +1,8 @@
 from flask_limiter.util import get_remote_address
 from olive.proto.rpc import RPCClient
-from flask_restful import Resource
 from fig.schemas import add_survey
+from flask_restful import Resource
+from fig.response import Response
 from jsonschema import validate
 from fig import app, limiter
 from flask import request
@@ -45,14 +46,14 @@ class SurveyCollection(Resource):
                 'platform': survey.platform
             })
 
-        return {
-            'pagination': {
+        return Response.success(
+            result=surveys,
+            pagination={
                 'skip': skip,
                 'page_size': page_size,
                 'total_count': res.total_count
-            },
-            'result': surveys
-        }, 200
+            }
+        )
 
     def post(self):
         app.logger.debug('creating a new survey...')
@@ -64,7 +65,11 @@ class SurveyCollection(Resource):
         res = client_rpc.call(method='AddSurvey',
                               **survey)
         app.logger.info('survey has been created: {}'.format(res.survey_id))
-        return {'survey_id': res.survey_id}, 201
+
+        return Response.success(
+            result={'survey_id': res.survey_id},
+            status_code=201
+        )
 
 
 class SurveyResource(Resource):

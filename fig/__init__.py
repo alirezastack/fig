@@ -1,11 +1,12 @@
 from flask_limiter.util import get_remote_address
-from jsonschema import ValidationError
 from werkzeug.exceptions import HTTPException
+from jsonschema import ValidationError
 from logging.config import dictConfig
 from grpc import FutureTimeoutError
+from fig.response import Response
 from flask_limiter import Limiter
-from flask import Flask, jsonify
 from olive.exc import GRPCError
+from flask import Flask
 import traceback
 import logging
 
@@ -79,8 +80,11 @@ def handle_error(e):
     else:
         pass
 
-    return jsonify({'error': {
-        'code': code,
-        'reason': reason,
-        'details': details
-    }}), status_code
+    return Response.error(
+        error={
+            'code': code,
+            'reason': reason,
+            'details': details
+        },
+        status_code=status_code
+    )

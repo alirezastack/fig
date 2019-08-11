@@ -1,3 +1,4 @@
+from fig.response import Response
 from fig.schemas import add_question, update_question
 from flask_limiter.util import get_remote_address
 from olive.proto.rpc import RPCClient
@@ -40,9 +41,9 @@ class QuestionCollection(Resource):
                 'weight': question.weight
             })
 
-        return {
-            'result': questions
-        }
+        return Response.success(
+            result=questions,
+        )
 
     def post(self):
         app.logger.debug('creating a new question...')
@@ -54,7 +55,10 @@ class QuestionCollection(Resource):
         res = client_rpc.call(method='AddQuestion',
                               **question)
         app.logger.info('question has been created: {}'.format(res.question_id))
-        return {'question_id': res.question_id}, 201
+        return Response.success(
+            result={'question_id': res.question_id},
+            status_code=201
+        )
 
 
 class QuestionResource(Resource):
@@ -86,19 +90,21 @@ class QuestionResource(Resource):
                 'content': r.content
             })
 
-        return {
-            '_id': res._id,
-            'ranges': ranges,
-            'category': res.category,
-            'title': {
-                'on_rate': res.title.on_rate,
-                'on_display': res.title.on_display
-            },
-            'order': res.order,
-            'status': res.status,
-            'include_in': list(res.include_in),
-            'weight': res.weight
-        }
+        return Response.success(
+            result={
+                '_id': res._id,
+                'ranges': ranges,
+                'category': res.category,
+                'title': {
+                    'on_rate': res.title.on_rate,
+                    'on_display': res.title.on_display
+                },
+                'order': res.order,
+                'status': res.status,
+                'include_in': list(res.include_in),
+                'weight': res.weight
+            }
+        )
 
     def patch(self, question_id):
         app.logger.debug('patch question {}'.format(question_id))
@@ -109,14 +115,17 @@ class QuestionResource(Resource):
         res = client_rpc.call(method='UpdateQuestion',
                               question_id=question_id,
                               **question)
-        return {
-            'is_updated': res.is_updated
-        }
+
+        return Response.success(
+            result={'is_updated': res.is_updated}
+        )
 
     def delete(self, question_id):
+        app.logger.debug('deleting question {}...'.format(question_id))
         client_rpc = RPCClient('mango')
         res = client_rpc.call(method='DeleteQuestion',
                               question_id=question_id)
-        return {
-            'is_deleted': res.is_deleted
-        }
+
+        return Response.success(
+            result={'is_deleted': res.is_deleted}
+        )
