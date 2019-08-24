@@ -1,4 +1,5 @@
 from flask_limiter.util import get_remote_address
+from olive.http import parse_get_args
 from olive.proto.rpc import RPCClient
 from fig.schemas import add_survey
 from flask_restful import Resource
@@ -24,13 +25,12 @@ class SurveyCollection(Resource):
         super(SurveyCollection, self).__init__()
 
     def get(self):
-        skip = int(request.args.get('skip', 0))
-        page_size = int(request.args.get('page_size', 50))
-        app.logger.debug('getting list of surveys skip={} limit={}'.format(skip, page_size))
+        filters = parse_get_args(request, ['skip', 'page_size', 'city', 'complex'])
+
+        app.logger.debug('getting list of surveys {}'.format(filters))
         client_rpc = RPCClient('mango')
         res = client_rpc.call(method='GetSurveys',
-                              skip=skip,
-                              limit=page_size)
+                              **filters)
 
         surveys = []
         for survey in res.surveys:
@@ -49,8 +49,8 @@ class SurveyCollection(Resource):
         return Response.success(
             result=surveys,
             pagination={
-                'skip': skip,
-                'page_size': page_size,
+                'skip': filters.get('skip', 0),
+                'page_size': filters.get('page_size', 50),
                 'total_count': res.total_count
             }
         )
