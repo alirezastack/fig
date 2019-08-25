@@ -8,6 +8,10 @@
 		"formatter": "[%(asctime)s %(filename)15s:%(lineno)4s - %(funcName)13s()] %(levelname)7s in %(module)13s: %(message)s",
 		"level": "DEBUG"
 	},
+	"LEGACY": {
+		"base_url": "http://127.0.0.1:8001/api/",
+		"key": "IHFBD*&G#IUFIUHj81LRAqj*F*S@H"
+	},
 	"ERRORS": {
 		"server_error": {
 			"code": "server_error",
