@@ -1,8 +1,8 @@
 from fig.core.question import QuestionCollection, QuestionResource
 from fig.core.survey import SurveyCollection, SurveyResource
+from fig.graphql_schema import GraphSchema
 from flask_graphql import GraphQLView
 from fig.core.client import Client
-from fig.schema import GraphSchema
 from fig.core.login import ROPC
 from flask_restful import Api
 from fig import app
