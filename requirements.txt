@@ -14,5 +14,6 @@ uWSGI==2.0.18
 uwsgitop==0.11
 
 graphene==2.1.8
+Flask-GraphQL==2.0.0
 
 -e git+https://deploy-token-olive:Gei1gXTWR_9HoUhXYeoM@git.zoodroom.com/basket/olive.git@master#egg=olive

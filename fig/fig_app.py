@@ -22,6 +22,6 @@ class FigApp:
         api.add_resource(SurveyCollection, '/surveys')
         api.add_resource(SurveyResource, '/surveys/<string:survey_id>')
 
-        app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql', schema=GraphSchema, graphiql=True))
+        app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql', schema=GraphSchema))
 
         return app
