@@ -6,7 +6,7 @@ f.close()
 
 setup(
     name='fig',
-    version='0.0.8',
+    version='0.0.9',
     description='Frontier API Gateway',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',

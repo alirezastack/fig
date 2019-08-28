@@ -14,7 +14,7 @@ question_full_properties = {
         "type": "array",
         "items": {
             "type": "string",
-            "enum": ["on_rate", "on_display"]
+            "enum": ["user_rate", "rate_display"]
         },
         "uniqueItems": True,
         "minItems": 1,
