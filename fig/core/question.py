@@ -30,7 +30,6 @@ class QuestionCollection(Resource):
         for question in res.questions:
             questions.append({
                 '_id': question._id,
-                'category': question.category,
                 'title': {
                     'on_rate': question.title.on_rate,
                     'on_display': question.title.on_display
@@ -94,7 +93,6 @@ class QuestionResource(Resource):
             result={
                 '_id': res._id,
                 'ranges': ranges,
-                'category': res.category,
                 'title': {
                     'on_rate': res.title.on_rate,
                     'on_display': res.title.on_display

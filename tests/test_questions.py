@@ -6,15 +6,13 @@ import pytest
 
 
 class MockQuestionResponse(object):
-    def __init__(self, _id, ranges, weight, title, order, category, status, include_in):
+    def __init__(self, _id, ranges, weight, title, order, include_in):
         self._id = _id
         self.question_id = _id
         self.ranges = ranges
         self.weight = weight
         self.title = title
         self.order = order
-        self.category = category
-        self.status = status
         self.include_in = include_in
 
 
@@ -67,8 +65,6 @@ def test_create_question(mock_rpc_resp, client, app):
         weight=1,
         order=1,
         ranges=[MockRanges('#000', '(1,3)', 'Great')],
-        category='cate',
-        status='active',
         include_in=['on_rate', 'on_display']
     )
 
@@ -86,8 +82,6 @@ def test_create_question(mock_rpc_resp, client, app):
         },
         'include_in': ['on_rate'],
         'weight': 1,
-        'status': 'active',
-        'category': 'h'
     }), headers=headers)
 
     assert response.json['result']['question_id'] == '5d47b9b46dd9f292c39362c8'
@@ -102,8 +96,6 @@ def test_create_invalid_includein_question(mock_rpc_resp, client, app):
         weight=1,
         order=1,
         ranges=[MockRanges('#000', '(1,3)', 'Great')],
-        category='cate',
-        status='active',
         include_in=['on_rate']
     )
 
@@ -121,8 +113,6 @@ def test_create_invalid_includein_question(mock_rpc_resp, client, app):
         },
         'include_in': ['on_rate', 'on_rate'],
         'weight': 1,
-        'status': 'active',
-        'category': 'h'
     }), headers=headers)
 
     assert response.status_code == 400

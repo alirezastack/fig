@@ -26,12 +26,6 @@ question_full_properties = {
     "order": {
         "type": "number"
     },
-    "status": {
-        "type": "string"
-    },
-    "category": {
-        "type": "string"
-    }
 }
 
 add_question = {
@@ -43,8 +37,6 @@ add_question = {
         "include_in",
         "weight",
         "order",
-        "status",
-        "category"
     ]
 }
 
