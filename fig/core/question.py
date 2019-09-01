@@ -1,8 +1,8 @@
-from fig.response import Response
 from fig.schemas import add_question, update_question
 from flask_limiter.util import get_remote_address
 from olive.proto.rpc import RPCClient
 from flask_restful import Resource
+from fig.response import Response
 from jsonschema import validate
 from fig import app, limiter
 from flask import request
@@ -81,18 +81,9 @@ class QuestionResource(Resource):
         res = client_rpc.call(method='GetQuestionById',
                               question_id=question_id)
 
-        ranges = []
-        for r in res.ranges[:]:
-            ranges.append({
-                'color': r.color,
-                'range': r.range,
-                'content': r.content
-            })
-
         return Response.success(
             result={
                 '_id': res._id,
-                'ranges': ranges,
                 'title': {
                     'on_rate': res.title.on_rate,
                     'on_display': res.title.on_display
