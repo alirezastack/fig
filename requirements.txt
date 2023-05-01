@@ -1,4 +1,4 @@
-Flask==1.0.3
+Flask==2.3.2
 Flask-Limiter==1.0.1
 Flask-RESTful==0.3.7
 
